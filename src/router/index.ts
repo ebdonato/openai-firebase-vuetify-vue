@@ -5,7 +5,7 @@ const router = createRouter({
     routes: [
         {
             path: "/",
-            component: () => import("@/layouts/LoginLayout.vue"),
+            component: () => import("@/layouts/LandingLayout.vue"),
             children: [
                 {
                     path: "",
@@ -23,7 +23,19 @@ const router = createRouter({
                     component: () => import("@/views/MainView.vue"),
                     name: "MainPage",
                 },
+                {
+                    path: "create",
+                    component: () => import("@/views/CreateView.vue"),
+                    name: "CreatePage",
+                },
             ],
+        },
+
+        // Always leave this as last one,
+        // but you can also remove it
+        {
+            path: "/:catchAll(.*)*",
+            component: () => import("@/views/ErrorNotFound.vue"),
         },
     ],
 })

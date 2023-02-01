@@ -9,8 +9,10 @@ import {
     getAuth,
 } from "firebase/auth"
 
-const loading = ref(false)
-const showError = ref(false)
+import router from "@/router"
+
+const isLoading = ref(false)
+const snackShow = ref(false)
 
 const providers = [
     {
@@ -49,15 +51,17 @@ const signIn = (providerName: string): void => {
     const provider = providers.find((item) => item.name === providerName)?.providerFactory()
 
     if (provider) {
-        loading.value = true
+        isLoading.value = true
         signInWithPopup(getAuth(), provider)
-            .then(() => {})
+            .then(() => {
+                router.push({ name: "MainPage" })
+            })
             .catch((error) => {
-                showError.value = true
+                snackShow.value = true
                 console.error(error)
             })
             .finally(() => {
-                loading.value = false
+                isLoading.value = false
             })
     }
 }
@@ -85,10 +89,12 @@ const signIn = (providerName: string): void => {
                     </div>
                 </template>
             </v-card>
-            <v-overlay v-model="loading" class="align-center justify-center" persistent>
+            <v-overlay v-model="isLoading" class="align-center justify-center" persistent>
                 <v-progress-circular color="primary" indeterminate size="64"></v-progress-circular>
             </v-overlay>
-            <v-snackbar v-model="showError" timeout="2000" color="error"> Erro ao tentar entrar </v-snackbar>
+            <v-snackbar v-model="snackShow" timeout="2000" color="error">
+                <div class="d-flex flex-column justify-center align-center">Error ao tentar entrar</div>
+            </v-snackbar>
         </v-container>
     </v-main>
 </template>

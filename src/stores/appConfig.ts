@@ -8,5 +8,10 @@ export const useAppConfigStore = defineStore("appConfig", () => {
         theme.value = theme.value === "dark" ? "light" : "dark"
     }
 
-    return { theme, themeIcon, toggleTheme }
+    const redirectTo = ref("")
+    function clearRedirectTo() {
+        redirectTo.value = ""
+    }
+
+    return { theme, themeIcon, toggleTheme, redirectTo, clearRedirectTo }
 })
