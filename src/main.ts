@@ -10,7 +10,7 @@ import "@/assets/base.css"
 const app = createApp(App)
 
 app.use(vuetify)
-app.use(createPinia())
 app.use(router)
+app.use(createPinia())
 
 app.mount("#app")
