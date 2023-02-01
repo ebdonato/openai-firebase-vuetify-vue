@@ -1,6 +1,10 @@
 # openai-firebase-vuetify-vue
 
 This template should help get you started developing with Vue 3 in Vite.
+This also implements Vuetify as components library and Firebase as backend as service.
+DALL-E API used to Generate images from natural language.
+
+> Inspired by [a video from Javascript Mastery Youtube channel](https://www.youtube.com/watch?v=EyIvuigqDoA).
 
 ## Recommended IDE Setup
 
@@ -44,3 +48,11 @@ npm run build
 ```sh
 npm run lint
 ```
+
+### Project Firebase Deploy
+
+```sh
+npm run deploy
+```
+
+> Setup Firebase CLI first with this command: `npx firebase init`
