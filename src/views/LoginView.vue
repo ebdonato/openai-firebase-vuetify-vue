@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue"
 import {
     GoogleAuthProvider,
     TwitterAuthProvider,
@@ -7,6 +8,9 @@ import {
     signInWithPopup,
     getAuth,
 } from "firebase/auth"
+
+const loading = ref(false)
+const showError = ref(false)
 
 const providers = [
     {
@@ -45,9 +49,16 @@ const signIn = (providerName: string): void => {
     const provider = providers.find((item) => item.name === providerName)?.providerFactory()
 
     if (provider) {
-        signInWithPopup(getAuth(), provider).catch((error) => {
-            console.error(error)
-        })
+        loading.value = true
+        signInWithPopup(getAuth(), provider)
+            .then(() => {})
+            .catch((error) => {
+                showError.value = true
+                console.error(error)
+            })
+            .finally(() => {
+                loading.value = false
+            })
     }
 }
 </script>
@@ -74,6 +85,10 @@ const signIn = (providerName: string): void => {
                     </div>
                 </template>
             </v-card>
+            <v-overlay v-model="loading" class="align-center justify-center" persistent>
+                <v-progress-circular color="primary" indeterminate size="64"></v-progress-circular>
+            </v-overlay>
+            <v-snackbar v-model="showError" timeout="2000" color="error"> Erro ao tentar entrar </v-snackbar>
         </v-container>
     </v-main>
 </template>
